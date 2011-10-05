@@ -13,39 +13,41 @@ get '/' do
 end
 
 get '/:size' do
-  begin
-    wh, format = params[:size].downcase.split('.')
-    format = FORMATS[format] || 'png'
+  width_height, format = params[:size].downcase.split('.')
+  format = FORMATS[format] || 'png'
 
-    width, height = wh.split('x').map { |wat| wat.to_i }
+  width, height = width_height.split('x').map { |wat| wat.to_i }
 
-    height = width unless height
+  height = width unless height
 
-    backgroundcolor = color_convert(params[:backgroundcolor]) || '#eeeeee'
-    text_color = color_convert(params[:textcolor]) || '#aaaaaa'
+  backgroundcolor = color_convert(params[:backgroundcolor]) || '#eeeeee'
+  text_color = color_convert(params[:textcolor]) || '#aaaaaa'
 
-    rvg = Magick::RVG.new(width, height).viewbox(0, 0, width, height) do |canvas|
-      canvas.background_fill = backgroundcolor
-    end
+  rvg = Magick::RVG.new(width, height).viewbox(0, 0, width, height) do |canvas|
+    canvas.background_fill = backgroundcolor
+  end
+  
+  # background
+  images = nil
+  dummy = rvg.draw
+  dummy.format = format
+  
+  use_loader = format == 'gif' && params[:loader] != 'false'
+  use_image = params[:image] == 'true' && !use_loader
+  use_text = !use_image && !use_loader
+  
+  case true
     
-    # background
-    dummy = rvg.draw
-    dummy.format = format
-    
-    use_image = (format != 'gif') && !params[:image].nil?
-    use_text = (format != 'gif') && !use_image
-    
-    if use_text
+    when use_text
       # text
       drawable = Magick::Draw.new
       drawable.pointsize = width / 10
-      drawable.font = ('./DroidSans.ttf')
+      drawable.font = './DroidSans.ttf'
       drawable.fill = text_color
       drawable.gravity = Magick::CenterGravity
       drawable.annotate(dummy, 0, 0, 0, 0, "#{width} x #{height}")
-    end
-    
-    if use_image
+  
+    when use_image
       # image
       image = Magick::Image.read('images/image.png').first rescue nil
       image_width = width/4
@@ -62,11 +64,8 @@ get '/:size' do
         end
         dummy = flatten.flatten_images
       end
-    end
-    
-    if use_text || use_image
-      images = dummy
-    else
+  
+    when use_loader
       # animation
       images = Magick::ImageList.new('images/loader.gif')
       loader_width = width/4
@@ -85,14 +84,13 @@ get '/:size' do
         flatten << frame
         images[index] = flatten.flatten_images
       end
-    end
-    
-    content_type "image/#{format}"
+  end
+  
+  content_type "image/#{format}"
+  if images
     images.to_blob
-
-  rescue Exception => e
-    @error = e
-    erb :error
+  else
+    dummy.to_blob
   end
 
 end
