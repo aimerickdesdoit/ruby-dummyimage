@@ -1,9 +1,17 @@
 <html>
   <head>
     <style type="text/css">
-      body {
+      body, td {
         font-family: arial;
         font-size: 12px;
+      }
+      td {
+        vertical-align: top;
+        padding: 5px;
+      }
+      h2 {
+        padding: 0px;
+        margin: 0px;
       }
     </style>
   </head>
@@ -11,13 +19,54 @@
     <p>Welcome to dummyimage.</p>
     <p><a href="http://github.com/aimerickdesdoit/dummyimage" target="_blank">http://github.com/aimerickdesdoit/dummyimage</a></p>
     
-    <p>Example with text :<br/><img src="/150x200.jpg?backgroundcolor=green&textcolor=!ffffff" /></p>
-    <p>Code: <code>&lt;img src="/150x200.jpg?backgroundcolor=green&textcolor=!ffffff" /&gt;</code>
-    
-    <p>Example with image :<br/><img src="/150x200.jpg?backgroundcolor=green&textcolor=!ffffff&image=true" /></p>
-    <p>Code: <code>&lt;img src="/150x200.jpg?backgroundcolor=green" /&gt;</code>
-    
-    <p>Example with GIF loader :<br/><img src="/150x200.gif?backgroundcolor=green" /></p>
-    <p>Code: <code>&lt;img src="/150x200.gif?backgroundcolor=green" /&gt;</code>
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td colspan="2"><h2>Example with text</h2></td>
+      </tr>
+      <tr>
+        <td>JPG / PNG</td>
+        <td>GIF</td>
+      </tr>
+      <tr>
+        <td><img src="/150x200.jpg?backgroundcolor=green&textcolor=!ffffff" /></td>
+        <td><img src="/150x200.gif?backgroundcolor=green&textcolor=!ffffff&loader=false" /></td>
+      </tr>
+      <tr>
+        <td>
+          Code : <code>&lt;img src="/150x200.jpg?backgroundcolor=green&textcolor=!ffffff" /&gt;</code>
+          <br/>
+          Code : <code>&lt;img src="/150x200.png?backgroundcolor=green&textcolor=!ffffff" /&gt;</code>
+        </td>
+        <td>Code : <code>&lt;img src="/150x200.gif?backgroundcolor=green&textcolor=!ffffff&loader=false" /&gt;</code></td>
+      </tr>
+      <tr>
+        <td colspan="2"><h2>Example with image</h2></td>
+      </tr>
+      <tr>
+        <td>JPG / PNG</td>
+        <td>GIF</td>
+      </tr>
+      <tr>
+        <td><img src="/150x200.jpg?backgroundcolor=green&image=true" /></td>
+        <td><img src="/150x200.gif?backgroundcolor=green&image=true&loader=false" /></td>
+      </tr>
+      <tr>
+        <td>
+          Code : <code>&lt;img src="/150x200.jpg?backgroundcolor=green&image=true" /&gt;</code>
+          <br/>
+          Code : <code>&lt;img src="/150x200.png?backgroundcolor=green&image=true" /&gt;</code>
+        </td>
+        <td>Code : <code>&lt;img src="/150x200.gif?backgroundcolor=green&image=true&loader=false" /&gt;</code></td>
+      </tr>
+      <tr>
+        <td colspan="2"><h2>Example with GIF loader</h2></td>
+      </tr>
+      <tr>
+        <td colspan="2"><img src="/150x200.gif?backgroundcolor=green" /></td>
+      </tr>
+      <tr>
+        <td colspan="2">Code : <code>&lt;img src="/150x200.gif?backgroundcolor=green" /&gt;</code></td>
+      </tr>
+    </table>
   </body>
 </html>
