@@ -1,2 +1,4 @@
 .idea/
 .bundle/
+.project
+.rvmrc
