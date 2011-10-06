@@ -2,3 +2,6 @@
 .bundle/
 .project
 .rvmrc
+cache/*.jpg
+cache/*.png
+cache/*.gif
