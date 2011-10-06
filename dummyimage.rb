@@ -15,6 +15,7 @@ get '/' do
 end
 
 get '/:size' do
+  # request hash for cache
   request_uri = request.path + (request.query_string == '' ? '' : '?' + request.query_string)
   hash = Digest::MD5.hexdigest(request_uri)
   
@@ -22,6 +23,7 @@ get '/:size' do
   width_height, format = params[:size].downcase.split('.')
   format = FORMATS[format] || 'png'
   
+  # cache file
   cache_file = File.expand_path("#{hash}.#{format}", CACHE_DIR)
   
   unless File.exists? cache_file
