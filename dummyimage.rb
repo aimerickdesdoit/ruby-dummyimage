@@ -6,7 +6,7 @@ require 'digest'
 FORMATS = {
   'png' => 'png',
   'gif' => 'gif',
-  'jpg' => 'jpeg'
+  'jpg' => 'jpg'
 }
 CACHE_DIR = File.expand_path('../cache', __FILE__)
 
